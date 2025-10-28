@@ -1,0 +1,75 @@
+INFO:     Started server process [67]
+INFO:     Waiting for application startup.
+2025-09-01 13:28:21.827 | INFO     | magic_pdf.model.taichu_custom_model:__init__:28 - using configs: {'device': 'cuda', 'weights': {'doclayout_yolo': 'Structure/doclayout_yolo_docstructbench_imgsz1280_2501.pt', 'layoutreader': 'Relation'}, 'models_dir': '/code/BedrockOCR-main/model_weight', 'layout_config': {'model': 'doclayout_yolo', 'reader': {'name': 'layoutreader'}}, 'chat_config': {'weight_path': '/code/BedrockOCR-main/model_weight/Recognition', 'backend': 'vllm', 'batch_size': 10}}
+2025-09-01 13:28:21.827 | INFO     | magic_pdf.model.taichu_custom_model:__init__:31 - using device: cuda
+2025-09-01 13:28:21.931 | INFO     | magic_pdf.model.taichu_custom_model:__init__:43 - using models_dir: /code/BedrockOCR-main/model_weight
+2025-09-01 13:28:22.501 | INFO     | magic_pdf.model.taichu_custom_model:__init__:70 - layout model loaded: doclayout_yolo
+2025-09-01 13:28:24.561 | INFO     | magic_pdf.model.taichu_custom_model:__init__:95 - layoutreader model loaded: layoutreader
+2025-09-01 13:28:24.561 | INFO     | magic_pdf.model.taichu_custom_model:__init__:105 - Use vLLM as backend
+INFO 09-01 13:28:24 [__init__.py:244] Automatically detected platform cuda.
+INFO 09-01 13:28:39 [config.py:823] This model supports multiple tasks: {'embed', 'generate', 'score', 'classify', 'reward'}. Defaulting to 'generate'.
+INFO 09-01 13:28:39 [config.py:2195] Chunked prefill is enabled with max_num_batched_tokens=8192.
+WARNING 09-01 13:28:40 [utils.py:2597] We must use the `spawn` multiprocessing start method. Overriding VLLM_WORKER_MULTIPROC_METHOD to 'spawn'. See https://docs.vllm.ai/en/latest/usage/troubleshooting.html#python-multiprocessing for more information. Reason: CUDA is initialized
+WARNING 09-01 13:28:49 [env_override.py:17] NCCL_CUMEM_ENABLE is set to 0, skipping override. This may increase memory overhead with cudagraph+allreduce: https://github.com/NVIDIA/nccl/issues/1234
+INFO 09-01 13:28:49 [__init__.py:244] Automatically detected platform cuda.
+INFO 09-01 13:28:53 [core.py:455] Waiting for init message from front-end.
+INFO 09-01 13:28:53 [core.py:70] Initializing a V1 LLM engine (v0.9.1) with config: model='/code/BedrockOCR-main/model_weight/Recognition', speculative_config=None, tokenizer='/code/BedrockOCR-main/model_weight/Recognition', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, override_neuron_config={}, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=8196, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto,  device_config=cuda, decoding_config=DecodingConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_backend=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=/code/BedrockOCR-main/model_weight/Recognition, num_scheduler_steps=1, multi_step_stream_outputs=True, enable_prefix_caching=True, chunked_prefill_enabled=True, use_async_output_proc=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"","custom_ops":["none"],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"enable_auto_functionalized_v2":false},"inductor_passes":{},"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"max_capture_size":512,"local_cache_dir":null}
+WARNING 09-01 13:28:54 [utils.py:2737] Methods determine_num_available_blocks,device_config,get_cache_block_size_bytes,initialize_cache not implemented in <vllm.v1.worker.gpu_worker.Worker object at 0x7f2d9a878640>
+INFO 09-01 13:28:54 [parallel_state.py:1065] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+Keyword argument `use_fast` is not a valid argument for this processor and will be ignored.
+Unused or unrecognized kwargs: return_tensors, fps.
+Token indices sequence length is longer than the specified maximum sequence length for this model (32768 > 8196). Running this sequence through the model will result in indexing errors
+WARNING 09-01 13:29:01 [topk_topp_sampler.py:59] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 09-01 13:29:01 [gpu_model_runner.py:1595] Starting to load model /code/BedrockOCR-main/model_weight/Recognition...
+INFO 09-01 13:29:01 [gpu_model_runner.py:1600] Loading model from scratch...
+WARNING 09-01 13:29:01 [vision.py:91] Current `vllm-flash-attn` has a bug inside vision module, so we use xformers backend instead. You can run `pip install flash-attn` to use flash-attention backend.
+INFO 09-01 13:29:01 [cuda.py:252] Using Flash Attention backend on V1 engine.
+Loading safetensors checkpoint shards:   0% Completed | 0/2 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  50% Completed | 1/2 [00:00<00:00,  1.36it/s]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:04<00:00,  2.64s/it]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:04<00:00,  2.36s/it]
+
+INFO 09-01 13:29:06 [default_loader.py:272] Loading weights took 4.88 seconds
+INFO 09-01 13:29:07 [gpu_model_runner.py:1624] Model loading took 7.1557 GiB and 5.087555 seconds
+INFO 09-01 13:29:08 [gpu_model_runner.py:1978] Encoder cache will be initialized with a budget of 16384 tokens, and profiled with 1 image items of the maximum feature size.
+INFO 09-01 13:29:23 [backends.py:462] Using cache directory: /root/.cache/vllm/torch_compile_cache/3d6f4f4659/rank_0_0 for vLLM's torch.compile
+INFO 09-01 13:29:23 [backends.py:472] Dynamo bytecode transform time: 8.93 s
+INFO 09-01 13:29:30 [backends.py:135] Directly load the compiled graph(s) for shape None from the cache, took 6.334 s
+INFO 09-01 13:29:31 [monitor.py:34] torch.compile takes 8.93 s in total
+INFO 09-01 13:29:33 [gpu_worker.py:227] Available KV cache memory: 9.70 GiB
+INFO 09-01 13:29:33 [kv_cache_utils.py:715] GPU KV cache size: 282,464 tokens
+INFO 09-01 13:29:33 [kv_cache_utils.py:719] Maximum concurrency for 8,196 tokens per request: 34.41x
+INFO 09-01 13:30:03 [gpu_model_runner.py:2048] Graph capturing finished in 29 secs, took 0.60 GiB
+INFO 09-01 13:30:03 [core.py:171] init engine (profile, create kv cache, warmup model) took 55.79 seconds
+2025-09-01 13:30:04.902 | INFO     | magic_pdf.model.taichu_custom_model:__init__:124 - VLM loaded: Recognition
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:22 (Press CTRL+C to quit)
+TaichuOCR model initialized successfully
+修复失败: EOF marker not found
+INFO:     10.16.1.23:55714 - "POST /parsepdf HTTP/1.1" 500 Internal Server Error
+2025-09-01 13:31:15.847 | INFO     | magic_pdf.data.dataset:__init__:152 - lang: None
+2025-09-01 13:31:17.395 | INFO     | magic_pdf.model.batch_analyze_llm:__call__:51 - layout time: 1.23, image num: 5
+2025-09-01 13:31:17.492 | INFO     | magic_pdf.model.batch_analyze_llm:__call__:75 - VLM OCR start...
+Starting to parse file: /var/tmp/tmpbhb2b_0c.pdf
+Output dir: /var/tmp/taichuocr_parse_nk3avwm1/tmpbhb2b_0c
+Performing document parsing...
+Adding requests:   0%|          | 0/94 [00:00<?, ?it/s]You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+Keyword argument `use_fast` is not a valid argument for this processor and will be ignored.
+Adding requests:   1%|          | 1/94 [00:03<04:44,  3.06s/it]Adding requests:   6%|▋         | 6/94 [00:03<00:34,  2.54it/s]Adding requests:  12%|█▏        | 11/94 [00:03<00:15,  5.35it/s]Adding requests:  16%|█▌        | 15/94 [00:03<00:09,  8.02it/s]Adding requests:  28%|██▊       | 26/94 [00:03<00:03, 18.11it/s]Adding requests:  37%|███▋      | 35/94 [00:03<00:02, 26.83it/s]Adding requests:  49%|████▉     | 46/94 [00:03<00:01, 39.14it/s]Adding requests:  67%|██████▋   | 63/94 [00:03<00:00, 61.55it/s]Adding requests:  79%|███████▊  | 74/94 [00:03<00:00, 69.40it/s]Adding requests:  96%|█████████▌| 90/94 [00:04<00:00, 88.36it/s]Adding requests: 100%|██████████| 94/94 [00:04<00:00, 21.94it/s]
+Processed prompts:   0%|          | 0/94 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:   1%|          | 1/94 [00:03<05:46,  3.72s/it, est. speed input: 18.80 toks/s, output: 0.81 toks/s]Processed prompts:   6%|▋         | 6/94 [00:03<00:41,  2.11it/s, est. speed input: 134.68 toks/s, output: 8.11 toks/s]Processed prompts:  19%|█▉        | 18/94 [00:03<00:09,  7.98it/s, est. speed input: 431.07 toks/s, output: 33.82 toks/s]Processed prompts:  30%|██▉       | 28/94 [00:04<00:04, 14.07it/s, est. speed input: 742.11 toks/s, output: 61.70 toks/s]Processed prompts:  38%|███▊      | 36/94 [00:04<00:03, 19.01it/s, est. speed input: 1046.56 toks/s, output: 93.95 toks/s]Processed prompts:  46%|████▌     | 43/94 [00:04<00:02, 20.71it/s, est. speed input: 1229.57 toks/s, output: 128.71 toks/s]Processed prompts:  52%|█████▏    | 49/94 [00:04<00:01, 23.20it/s, est. speed input: 1503.22 toks/s, output: 176.56 toks/s]Processed prompts:  57%|█████▋    | 54/94 [00:04<00:01, 25.50it/s, est. speed input: 1627.28 toks/s, output: 218.76 toks/s]Processed prompts:  64%|██████▍   | 60/94 [00:04<00:01, 29.34it/s, est. speed input: 1784.60 toks/s, output: 276.45 toks/s]Processed prompts:  69%|██████▉   | 65/94 [00:05<00:00, 31.64it/s, est. speed input: 1916.71 toks/s, output: 327.69 toks/s]Processed prompts:  74%|███████▍  | 70/94 [00:05<00:00, 28.93it/s, est. speed input: 2110.13 toks/s, output: 379.57 toks/s]Processed prompts:  79%|███████▊  | 74/94 [00:05<00:00, 25.97it/s, est. speed input: 2225.40 toks/s, output: 426.90 toks/s]Processed prompts:  83%|████████▎ | 78/94 [00:05<00:00, 20.07it/s, est. speed input: 2250.31 toks/s, output: 473.81 toks/s]Processed prompts:  86%|████████▌ | 81/94 [00:06<00:00, 15.04it/s, est. speed input: 2230.40 toks/s, output: 508.92 toks/s]Processed prompts:  89%|████████▉ | 84/94 [00:06<00:00, 13.08it/s, est. speed input: 2275.88 toks/s, output: 554.15 toks/s]Processed prompts:  91%|█████████▏| 86/94 [00:06<00:00, 12.44it/s, est. speed input: 2293.59 toks/s, output: 588.22 toks/s]Processed prompts:  94%|█████████▎| 88/94 [00:06<00:00, 11.74it/s, est. speed input: 2404.91 toks/s, output: 623.09 toks/s]Processed prompts:  96%|█████████▌| 90/94 [00:07<00:00,  7.07it/s, est. speed input: 2393.19 toks/s, output: 627.24 toks/s]Processed prompts:  98%|█████████▊| 92/94 [00:11<00:01,  1.88it/s, est. speed input: 1805.52 toks/s, output: 498.94 toks/s]Processed prompts:  99%|█████████▉| 93/94 [00:14<00:00,  1.08it/s, est. speed input: 1545.71 toks/s, output: 439.32 toks/s]Processed prompts: 100%|██████████| 94/94 [00:14<00:00,  1.15it/s, est. speed input: 1607.52 toks/s, output: 475.60 toks/s]Processed prompts: 100%|██████████| 94/94 [00:14<00:00,  6.35it/s, est. speed input: 1607.52 toks/s, output: 475.60 toks/s]
+2025-09-01 13:31:36.592 | INFO     | magic_pdf.model.batch_analyze_llm:__call__:100 - OCR processed images / total images: 1 / 5
+2025-09-01 13:31:36.592 | INFO     | magic_pdf.model.batch_analyze_llm:__call__:100 - OCR processed images / total images: 2 / 5
+2025-09-01 13:31:36.593 | INFO     | magic_pdf.model.batch_analyze_llm:__call__:100 - OCR processed images / total images: 3 / 5
+2025-09-01 13:31:36.593 | INFO     | magic_pdf.model.batch_analyze_llm:__call__:100 - OCR processed images / total images: 4 / 5
+2025-09-01 13:31:36.593 | INFO     | magic_pdf.model.batch_analyze_llm:__call__:100 - OCR processed images / total images: 5 / 5
+2025-09-01 13:31:36.593 | INFO     | magic_pdf.model.batch_analyze_llm:__call__:101 - llm ocr time: 19.2, image num: 5
+2025-09-01 13:31:37.225 | INFO     | magic_pdf.model.doc_analyze_by_custom_model_llm:doc_analyze_llm:54 - gc time: 0.4
+2025-09-01 13:31:37.225 | INFO     | magic_pdf.model.doc_analyze_by_custom_model_llm:doc_analyze_llm:58 - doc analyze time: 21.38,speed: 0.23 pages/second
+/root/miniconda3/envs/bedrockocr/lib/python3.10/site-packages/transformers/modeling_utils.py:1614: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+Parsing time: 22.59s
+Results saved to  /var/tmp/taichuocr_parse_nk3avwm1/tmpbhb2b_0c
+INFO:     10.16.1.23:55847 - "POST /parsepdf HTTP/1.1" 200 OK
+修复失败: EOF marker not found
+INFO:     10.16.1.23:56129 - "POST /parsepdf HTTP/1.1" 500 Internal Server Error

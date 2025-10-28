@@ -1,0 +1,10 @@
+device: cuda # cuda / cpu
+models_dir: s1_model
+layout_config: 
+  model: doclayout_yolo
+  reader:
+    name: layoutreader
+chat_config:
+  weight_path: s1_model/recognition_weight
+  backend: transformers # vllm / transformers
+  batch_size: 16

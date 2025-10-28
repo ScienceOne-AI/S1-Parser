@@ -1,0 +1,2 @@
+class AtomicModel:
+    Layout = "layout"

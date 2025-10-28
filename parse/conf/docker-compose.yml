@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  pytorchs1:
+    image: s1_parse-ocr-llm-engine
+    container_name: s1_parse
+    ports:
+      - "8080:22"
+    volumes:
+      - /mnt/s1_parse/workspace:/workspace
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    entrypoint: /bin/bash
+    stdin_open: true
+    tty: true
