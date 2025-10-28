@@ -34,7 +34,6 @@ This repository implements **S1-Parser**, as described in our paper:
 ## ⚙️ Environment Setup (Recommended)
 
 We recommend using **Python 3.10** and **PyTorch ≥ 2.7**.  
-Our experimental setup follows the configuration of the [DeepScaleR](https://github.com/agentica-project/rllm/tree/deepscaler) environment.
 
 Install the environment:
 ```bash
