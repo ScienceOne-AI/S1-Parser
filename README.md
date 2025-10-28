@@ -24,8 +24,8 @@ This repository implements **S1-Parser**, as described in our paper:
 
 ## 🚀 Features
 
-- 🧩 **Supervised Fine-Tuning** with ellipsis (`<think>\n...\n`) to activate stochastic thinking.
-- 🎯 **Multi-stage RL** to stabilize, reinforce, and prune reasoning behavior.
+- 🧩 **Supervised Fine-Tuning** with task-oriented ([Parse Target: Scientific Equations]) to sharpen domain adaptation.
+- 🎯 **Multi-stage RL** to refine, stabilize, and accelerate the learning process in strategic of behaviors.
 - 📊 Benchmarked on Scientific Literature Dataset: SCI_LLM
 
 ---
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 
 ---
 
-Make sure to configure your model paths and data in `scripts/train_*.sh`.
+Make sure to configure your model paths and data in `parse/code/run_ocr_*.sh`.
 
 
 
