@@ -14,7 +14,8 @@ This repository implements **S1-Parser**, as described in our paper:
 > *Learning : Shaping *  
 --- -->
 
-![framework1](./assets/1.png)
+![framework1](./assets/1.jpg)
+
 ---
 
 ## 📰 News
