@@ -19,3 +19,4 @@ matplotlib
 openai==1.88.0
 PyYAML
 dill>=0.3.8,<1
+unsloth==2025.8.1
