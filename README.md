@@ -43,9 +43,22 @@ cd S1-Parser
 pip install -r requirements.txt
 ```
 
+## 🏋️ Training
+
+S1-Parser training proceeds in **two stages** with different designs:
+
+```bash
+# Stage 1: Execute the Supervised Fine-Tuning (SFT) to acquire fundamental LaTeX OCR.
+bash scripts/run_train_ocr_sft_model.sh
+
+# Stage 2: Execute the GRPO training to optimize LaTeX formula syntax, symbol and structure.
+bash scripts/run_train_ocr_grpo_model.sh
+
+```
+
 ---
 
-Make sure to configure your model paths and data in `parse/code/run_ocr_*.sh`.
+Make sure to configure your model paths and data in `script/run_train_ocr_*.sh`.
 
 
 

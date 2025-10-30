@@ -224,7 +224,6 @@ def load_model_and_tokenizer(config: LaTeXOCRConfig) -> tuple[FastVisionModel, A
         max_seq_length=config.max_seq_length,
         load_in_4bit=config.load_in_4bit,
         load_in_8bit=config.load_in_8bit,
-        gpu_memory_utilization=config.gpu_memory_utilization,
         offload_folder=config.offload_folder
     )
 
@@ -310,8 +309,8 @@ def run_sft_training(
         seed=3407,
         report_to="none",
         label_smoothing_factor=config.label_smoothing_factor,
-        fp16=torch.cuda.is_available(),  # 自动启用FP16加速
-        max_seq_length=config.max_seq_length,
+        fp16=False,
+        bf16=True,
     )
 
     # 初始化训练器

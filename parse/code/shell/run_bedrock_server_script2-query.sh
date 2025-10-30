@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 CONTAINER_ID=""
-WORK_DIR="/workspace/S1-Parser/objectEye/code"
+WORK_DIR="/workspace/S1-Parser/code"
 
-LOG_FILE="/workspace/S1-Parser/objectEye/code/log/$(date +%Y%m%d)_message.log"
+LOG_FILE="/workspace/S1-Parser/code/log/$(date +%Y%m%d)_message.log"
 
 # 第 1~3 步：在容器里启动脚本
 docker exec -d "$CONTAINER_ID" bash -c "
