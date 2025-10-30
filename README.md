@@ -31,6 +31,13 @@ This repository implements **S1-Parser**, as described in our paper:
 
 ---
 
+## 🛢️ Benchmarks
+
+- [sci_llm](https://huggingface.co/datasets/1398listener/tmp_7/blob/main/sci_llm.zip)
+- [LaTeX_OCR](https://huggingface.co/datasets/linxy/LaTeX_OCR)
+
+---
+
 ## ⚙️ Environment Setup (Recommended)
 
 We recommend using **Python 3.10** and **PyTorch ≥ 2.7**.  
