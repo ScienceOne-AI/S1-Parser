@@ -76,6 +76,8 @@ def parse_args() -> argparse.Namespace:
                         help="权重衰减系数")
     parser.add_argument("--label_smoothing_factor", type=float, default=0.1,
                         help="标签平滑系数")
+    parser.add_argument("--use_qwen25", action="store_true", default=False,
+                        help="是否使用 Qwen2.5-VL 模型（默认使用 FastVisionModel）")
 
     return parser.parse_args()
 
@@ -208,54 +210,72 @@ def build_training_dataset(
 
 def load_model_and_tokenizer(config: LaTeXOCRConfig) -> tuple[FastVisionModel, AutoTokenizer]:
     """
-    加载模型和分词器
-
-    Args:
-        config: 模型配置对象
-
-    Returns:
-        加载并配置好的模型和分词器
+    加载模型和分词器（默认 FastVisionModel，--use_qwen25 启用 Qwen2.5-VL）
     """
     logger.info(f"开始加载模型: {config.base_model_dir}")
 
-    # 加载基础模型
-    model, tokenizer = FastVisionModel.from_pretrained(
-        model_name=config.base_model_dir,
-        max_seq_length=config.max_seq_length,
-        load_in_4bit=config.load_in_4bit,
-        load_in_8bit=config.load_in_8bit,
-        offload_folder=config.offload_folder
-    )
+    if not config.use_qwen25:
+        # 默认：加载 FastVisionModel + 完整 LoRA 配置
+        model, tokenizer = FastVisionModel.from_pretrained(
+            model_name=config.base_model_dir,
+            max_seq_length=config.max_seq_length,
+            load_in_4bit=config.load_in_4bit,
+            load_in_8bit=config.load_in_8bit,
+            offload_folder=config.offload_folder
+        )
+        # 配置 LoRA（包含文本+视觉编码器层）
+        model = FastVisionModel.get_peft_model(
+            model,
+            r=config.lora_rank,
+            target_modules=[
+                # 文本解码器（LLM部分）
+                "q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj",
+                # 视觉编码器
+                "vision_encoder.layers.0.attention.qkv", "vision_encoder.layers.0.attention.proj",
+                "vision_encoder.layers.1.attention.qkv", "vision_encoder.layers.1.attention.proj",
+                "vision_encoder.layers.2.attention.qkv", "vision_encoder.layers.2.attention.proj",
+                "vision_encoder.layers.3.attention.qkv", "vision_encoder.layers.3.attention.proj",
+                "vision_encoder.conv1", "vision_encoder.conv2",
+                "vision_encoder.fc1", "vision_encoder.fc2"
+            ],
+            lora_alpha=config.lora_rank * 2,
+            lora_dropout=0.15,
+            bias="lora_only",
+            use_gradient_checkpointing="unsloth",
+            random_state=3407,
+            inference_mode=False,
+        )
+    else:
+        # 启用 Qwen2.5-VL 时加载
+        from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
+        from peft import LoraConfig, get_peft_model
 
-    # 配置LoRA
-    model = FastVisionModel.get_peft_model(
-        model,
-        r=config.lora_rank,
-        target_modules=[
-            # 文本解码器（LLM部分）
-            "q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj",
-            # 视觉编码器
-            "vision_encoder.layers.0.attention.qkv", "vision_encoder.layers.0.attention.proj",
-            "vision_encoder.layers.1.attention.qkv", "vision_encoder.layers.1.attention.proj",
-            "vision_encoder.layers.2.attention.qkv", "vision_encoder.layers.2.attention.proj",
-            "vision_encoder.layers.3.attention.qkv", "vision_encoder.layers.3.attention.proj",
-            "vision_encoder.conv1", "vision_encoder.conv2",
-            "vision_encoder.fc1", "vision_encoder.fc2"
-        ],
-        lora_alpha=config.lora_rank * 2,
-        lora_dropout=0.15,
-        bias="lora_only",
-        use_gradient_checkpointing="unsloth",
-        random_state=3407,
-        inference_mode=False,
-    )
+        model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+            config.base_model_dir,
+            torch_dtype=torch.bfloat16,
+            max_seq_length=config.max_seq_length,
+            device_map="auto"
+        )
+        processor = AutoProcessor.from_pretrained(config.base_model_dir, trust_remote_code=False)
+        tokenizer = processor.tokenizer
 
-    # 训练优化设置
+        # 配置 Qwen2.5 的 LoRA（使用 config 中的 lora_rank，而非硬编码32）
+        lora_config = LoraConfig(
+            r=config.lora_rank,
+            lora_alpha=config.lora_rank * 2,
+            target_modules=["q_proj", "v_proj", "k_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+            lora_dropout=0.1,
+            bias="none",
+            task_type="CAUSAL_LM",
+        )
+        model = get_peft_model(model, lora_config)
+
+    # 统一训练优化设置（两个分支共用）
     model.enable_input_require_grads()
     model.gradient_checkpointing_enable()
-    model.config.use_cache = False  # 训练时禁用缓存
+    model.config.use_cache = False
 
-    # 配置分词器
+    # 统一分词器模板配置
     tokenizer.chat_template = (
             "{% if messages[0]['role'] =='system' %}"
             "{{ messages[0]['content'] + eos_token }}"
