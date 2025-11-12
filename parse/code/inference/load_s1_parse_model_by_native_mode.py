@@ -18,6 +18,7 @@ except ImportError as e:
 try:
     from transformers import Qwen2_5_VLForConditionalGeneration, Qwen2VLProcessor
 except ImportError:
+    print("Warning: Qwen2.5-VL dependencies not fully installed. Qwen2.5-VL mode may not work.")
     print("Install Qwen dependencies: pip install transformers>=4.40.0 accelerate>=0.30.0")
 
 
@@ -49,7 +50,11 @@ def simple_inference(
     max_new_tokens = 4096
     target_dtype = torch.bfloat16 if (device == "cuda" and torch.cuda.is_bf16_supported()) else torch.float32
 
-    print(f"Loading {model_type} model from: {model_path}")
+    # 修正表述：明确是「通过对应架构类加载模型」，而非「加载对应架构的模型」
+    if model_type == "fastvision":
+        print(f"Loading model via FastVisionModel from: {model_path}")
+    else:
+        print(f"Loading model via Qwen2_5_VLForConditionalGeneration from: {model_path}")
 
     # --------------------------
     # Model-specific Loading
@@ -158,7 +163,7 @@ def simple_inference(
 if __name__ == "__main__":
     # Core configuration - modify these parameters as needed
     MODEL_PATH = "./model/s1_parser"
-    TEST_IMAGE = "/data/test/parse_15.jpg"
+    TEST_IMAGE = "/data/parse_15.jpg"
     PROMPT = "Please recognize the LaTeX formula in the image and output the complete LaTeX code without additional explanations."
 
     # --------------------------
