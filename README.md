@@ -2,7 +2,7 @@
 # 📄 S1-Parser: Efficient Multimodal Document Parsing via Dynamic Structure-Semantics Fusion 
 
 <p align="center">
-          🔗 <a href="https://github.com/ScienceOne-AI/S1-Parser">Codebase</a>&nbsp&nbsp  
+          🔗 <a href="https://github.com/ScienceOne-AI/S1-Parser">Codebase</a>&nbsp&nbsp 📥 <a href="https://modelscope.cn/models/xdcaxy2013/S1-Parser/summary">ModelBase</a>&nbsp&nbsp  
 </p>
 
 
